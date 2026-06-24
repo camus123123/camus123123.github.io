@@ -87,11 +87,13 @@ function calculate() {
     if (singlePrice < bundleUnitPrice) {
         const diffPercent =
             ((bundleUnitPrice - singlePrice) / bundleUnitPrice) * 100;
+        const expectedBundlePrice = singlePrice * 5;
 
         resultText =
             `추천 구매: 코어젬스톤\n\n` +
             `코어젬스톤 1포인트 가격: ${singlePrice.toLocaleString()} 메소\n` +
             `거울세계의 코어 젬스톤 환산 가격: ${bundleUnitPrice.toLocaleString()} 메소\n\n` +
+            `거울세계의 코어 젬스톤 적정 가격: ${expectedBundlePrice.toLocaleString()} 메소\n\n` +
             `코어젬스톤이 약 ${diffPercent.toFixed(2)}% 더 효율적입니다.`;
     }
     else if (singlePrice > bundleUnitPrice) {
@@ -101,7 +103,7 @@ function calculate() {
         resultText =
             `추천 구매: 거울세계의 코어 젬스톤\n\n` +
             `코어젬스톤 1포인트 가격: ${singlePrice.toLocaleString()} 메소\n` +
-            `거울세계의 코어 젬스톤 환산 가격: ${bundleUnitPrice.toLocaleString()} 메소\n\n` +
+            `코어 젬스톤 적정 가격: ${bundleUnitPrice.toLocaleString()} 메소\n\n` +
             `거울세계의 코어 젬스톤이 약 ${diffPercent.toFixed(2)}% 더 효율적입니다.`;
     }
     else {
