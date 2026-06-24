@@ -18,8 +18,8 @@
             let total = meso + buyItem;
 
             document.getElementById('result').innerHTML = `
-                <p>수수료의 메소 가치: ${meso.toLocaleString()} 메소</p>
-                <p>총 지출 금액: ${total.toLocaleString()} 메소</p>
+                <p>수수료의 메소 가치: ${Math.floor(meso).toLocaleString()} 메소</p>
+                <p>총 지출 금액: ${Math.floor(total).toLocaleString()} 메소</p>
             `;
         }
     </script>
