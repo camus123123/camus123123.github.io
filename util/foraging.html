@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>채집 효율 계산기</title>
+    <script>
+        function calculate() {
+            const MEPO = parseFloat(document.getElementById('mepo').value);
+            const JUNIPER = parseFloat(document.getElementById('juniper').value);
+            const GAL = 70000000;
+            const NALGAL = 100000000;
+            const PC = 3; //피방 피로도 1당 가격(원) == (1500 / 500)
+            const DEFAULT = 150;
+
+            const galCount = DEFAULT * 2;
+            const pcORnalgalCount = DEFAULT * 3;
+
+            let galOutMoney = GAL / 800 * 500;
+            let pcOutMoney = (100000000 / MEPO) * PC * 500;
+
+            let defaultGetMoney = DEFAULT * JUNIPER;
+            let galGetMoney = galCount * JUNIPER - galOutMoney;
+            let nalgalGetMoney = pcORnalgalCount * JUNIPER - NALGAL;
+            let pcORnalgalGetMoney = pcORnalgalCount * JUNIPER - pcOutMoney;
+
+            const result = `
+		<p style="font-size: 18px; font-weight: bold;">
+1. 피로도 500 기준이고 가벼운 갈퀴는 피로도 800까지 소모 가능하나 피로도 500을 기준으로 하였음(피로도 500 소모는 1시간 30분 정도 걸림)
+		</p>
+		<p style="font-size: 18px; font-weight: bold;">
+2. 기본 상태 채집 개수를 150개로 설정 하였으나 절대적 평균은 아니라 그점 감안 해야함
+		</p>
+		<p style="font-size: 18px; font-weight: bold;">
+3. 쌩 채집 대비 가벼운 갈퀴는 약 2배, 날렵한 갈퀴, PC방은 약 3배정도 효율로 잡음
+		</p>
+                <p>기본: ${formatMoney(defaultGetMoney * 0.97)}(수수료 0.3%), ${formatMoney(defaultGetMoney * 0.95)} (수수료 0.5%)</p>
+                <p>가벼운 갈퀴: ${formatMoney(galGetMoney * 0.97)}(수수료 0.3%), ${formatMoney(galGetMoney * 0.95)}(수수료 0.5%)</p>
+                <p>날렵한 갈퀴: ${formatMoney(nalgalGetMoney * 0.97)}(수수료 0.3%), ${formatMoney(nalgalGetMoney * 0.95)}(수수료 0.5%)</p>
+                <p>PC방: ${formatMoney(pcORnalgalGetMoney * 0.97)}(수수료 0.3%), ${formatMoney(pcORnalgalGetMoney * 0.95)}(수수료 0.5%)</p>
+            `;
+            document.getElementById('result').innerHTML = result;
+        }
+
+        function formatMoney(amount) {
+            return Math.round(amount).toLocaleString('ko-KR') + '메소';
+        }
+    </script>
+</head>
+<body>
+    <h1>채집 효율 계산기</h1>
+    <label for="mepo">현재 억당 메포 가격:</label>
+    <input type="number" id="mepo" step="0.01"><br><br>
+
+    <label for="juniper">현재 쥬니퍼 베리 씨앗 가격:</label>
+    <input type="number" id="juniper" step="1"><br><br>
+
+    <button onclick="calculate()">계산하기</button>
+
+    <div id="result" style="margin-top:20px;"></div>
+</body>
+</html>
