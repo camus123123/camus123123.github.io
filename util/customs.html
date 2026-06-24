@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>경매장 관세 계산기</title>
+    <script>
+        function calculate() {
+            let nowMefo = parseFloat(document.getElementById('nowMefo').value);
+            let buyMefo = parseFloat(document.getElementById('buyMefo').value);
+            let buyItem = parseFloat(document.getElementById('buyItem').value);
+
+            if (isNaN(nowMefo) || isNaN(buyMefo) || isNaN(buyItem) || nowMefo === 0) {
+                alert('모든 값을 올바르게 입력하세요.');
+                return;
+            }
+
+            let meso = buyMefo * 100000000 / nowMefo;
+            let total = meso + buyItem;
+
+            document.getElementById('result').innerHTML = `
+                <p>수수료의 메소 가치: ${meso.toLocaleString()} 메소</p>
+                <p>총 지출 금액: ${total.toLocaleString()} 메소</p>
+            `;
+        }
+    </script>
+</head>
+<body>
+    <h1>경매장 관세 계산기</h1>
+
+    <label>현재 메포 시세 (수수료 제외 실수령 금액):</label><br>
+    <input type="number" id="nowMefo"><br><br>
+
+    <label>구매 할 템의 수수료 메포:</label><br>
+    <input type="number" id="buyMefo"><br><br>
+
+    <label>구매 할 템의 메소 가격:</label><br>
+    <input type="number" id="buyItem"><br><br>
+
+    <button onclick="calculate()">계산하기</button>
+
+    <div id="result" style="margin-top:20px; font-weight:bold;"></div>
+</body>
+</html>
