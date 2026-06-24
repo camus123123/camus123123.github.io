@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>경축/재획 제작 판매 이율 계산기</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h2 { color: #333; }
+        input { margin-bottom: 10px; padding: 5px; width: 200px; }
+        button { padding: 5px 10px; margin-top: 10px; }
+        .result { margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <h2>경축/재획 제작 판매 이율 계산기</h2>
+
+    <label>최고급 포션 빈병 가격: <input type="number" id="size" value="800"></label><br>
+    <label>쥬니퍼 베리 씨앗 오일 가격: <input type="number" id="oil" value="0"></label><br>
+    <label>최상급 아이템 결정 가격: <input type="number" id="best" value="0"></label><br>
+    <label>현자의 돌 가격: <input type="number" id="rock" value="0"></label><br>
+    <label>경험 축적의 비약 가격: <input type="number" id="k" value="0"></label><br>
+    <label>재물 획득의 비약 가격: <input type="number" id="j" value="0"></label><br>
+    <label>소형 경험 축적의 비약 가격: <input type="number" id="SEP" value="0"></label><br>
+    <label>소형 재물 획득의 비약 가격: <input type="number" id="SMP" value="0"></label><br>
+
+    <label>소형 고농축 경험 축적의 비약 가격: <input type="number" id="SSEP" value="0"></label><br>
+    <label>영롱한 황혼의 정수: <input type="number" id="y_h" value="0"></label><br>
+    <label>히솝 꽃 오일: <input type="number" id="hee" value="0"></label><br>
+    <label>마력 결정: <input type="number" id="ma" value="0"></label><br>
+
+
+    <label>판매 개수: <input type="number" id="n" value="0"></label><br>
+
+    <button onclick="calculate()">계산하기</button>
+
+    <div class="result" id="result"></div>
+
+    <script>
+        function calculate() {
+            let size = parseFloat(document.getElementById('size').value) || 0;
+            let oil = parseFloat(document.getElementById('oil').value) || 0;
+            let best = parseFloat(document.getElementById('best').value) || 0;
+            let rock = parseFloat(document.getElementById('rock').value) || 0;
+            let kPrice = parseFloat(document.getElementById('k').value) || 0;
+            let jPrice = parseFloat(document.getElementById('j').value) || 0;
+            let SSEP_price = parseFloat(document.getElementById('SSEP').value) || 0;
+            let SEP_price = parseFloat(document.getElementById('SEP').value) || 0;
+            let SMP_price = parseFloat(document.getElementById('SMP').value) || 0;
+            let y_h = parseFloat(document.getElementById('y_h').value) || 0;
+            let hee = parseFloat(document.getElementById('hee').value) || 0;
+            let ma = parseFloat(document.getElementById('ma').value) || 0;
+            let n = parseInt(document.getElementById('n').value) || 0;
+
+            let sum = size + (oil * 10) + (best * 5) + (rock * 2); <!-- 경축비 제작 비용 -->
+            let sum_1 = size + (oil * 10) + (best * 3) + rock; <!-- 재획비 제작 비용 -->
+            let small_money_potion = size + (oil * 5) + (best * 2) + rock;
+            let ssmall_exp_potion = (SEP_price * 4) + (y_h * 2) + (hee * 10) + (ma * 1000);
+
+            let k = (kPrice * 3) - sum; <!-- 경매장 경축비 가격 - 제작비용 -->
+            let j = (jPrice * 3) - sum_1; <!-- 경매장 재획비 가격 - 제작비용 -->
+            let smp = (SMP_price * 6) - small_money_potion;
+            let ssep = (SSEP_price * 4) - ssmall_exp_potion;
+
+            let k_base = (k - (k * 0.05)) * n; <!-- 수수료 작 no -->
+            let k_fee = (k - (k * 0.03)) * n; <!-- 수수료 작 yes -->
+            
+
+            let j_base = (j - (j * 0.05)) * n; <!-- 수수료 작 no -->
+            let j_fee = (j - (j * 0.03)) * n; <!-- 수수료 작 yes -->
+
+            let smp_base = (smp - (smp * 0.05)) * n;
+            let smp_fee = (smp - (smp * 0.03)) * n;
+            
+            let ssep_base = (ssep - (ssep * 0.05)) * n;
+            let ssep_fee = (ssep - (ssep * 0.03)) * n;
+
+            document.getElementById('result').innerHTML = `
+                <p>경축비 제작 시: "${Math.floor(k_base).toLocaleString()} 메소" (기본), "${Math.floor(k_fee).toLocaleString()} 메소" (수수료작)</p>
+		        <p>재획비 제작 시: "${Math.floor(j_base).toLocaleString()} 메소" (기본), "${Math.floor(j_fee).toLocaleString()} 메소" (수수료작)</p>
+		        <p>소형 재획비 제작 시: "${Math.floor(smp_base).toLocaleString()} 메소" (기본), "${Math.floor(smp_fee).toLocaleString()} 메소" (수수료작)</p>
+                <p>소형 고농축 경축비 제작 시: "${Math.floor(ssep_base).toLocaleString()} 메소" (기본), "${Math.floor(ssep_fee).toLocaleString()} 메소" (수수료작)</p>
+            `;
+        }
+    </script>
+
+</body>
+</html>
